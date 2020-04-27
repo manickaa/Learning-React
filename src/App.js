@@ -7,14 +7,24 @@ class App extends Component {
 		persons : [
 		{ name: 'Aish', age: 23},
 		{ name: 'Arun', age:26}
-		]
+		],
+		otherState: 'some other value'
 	}
 
+	buttonHandler = () => {
+		//console.log("was clicked");
+		this.setState( {
+			persons : [
+		{ name: 'Aishwarya', age: 23},
+		{ name: 'Arunkumar', age:26}
+		]
+		} )
+	}
 	render() {
 		return (
 	    <div className="App">
 	     <h1>Hi, I'm react App</h1>
-	     <button>Switch Name </button>
+	     <button onClick={this.buttonHandler}>Switch Name </button>
 	     	<Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
 	     	<Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
 	    </div>
