@@ -1,33 +1,26 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 import Person from './Person/Person';
 
-function App() {
-	const [message, setMessage] = useState(
-		{name: ["aishu", "arun", "sharann"],
-		 age: [22,27,19]
-		}
-	);
-	let persons = [];
-	for(let i=0; i<message.name.length; i++) {
-		let element = <Person name={message.name[i]} age={message.age[i]}/>
-		persons.push(element);
+class App extends Component {
+	state = {
+		persons : [
+		{ name: 'Aish', age: 23},
+		{ name: 'Arun', age:26}
+		]
 	}
-	const buttonHandler = () => {
-		setMessage(
-			{name: ["aishwarya", "arunkumar", "shivsharann"],
-		 	age: [22,27,19]
-			}
-		);
-	}
-	return (
+
+	render() {
+		return (
 	    <div className="App">
 	     <h1>Hi, I'm react App</h1>
-	     <button onClick = {buttonHandler}>Switch Name </button>
-	     	{persons}
+	     <button>Switch Name </button>
+	     	<Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
+	     	<Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
 	    </div>
 	    //React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Did I get it right?'), React.createElement('h2', null, 'YES! I did!!'))
 	  );
+	}
 }
 
 export default App;
