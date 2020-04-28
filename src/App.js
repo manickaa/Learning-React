@@ -5,8 +5,8 @@ import Person from './Person/Person';
 class App extends Component {
 	state = {
 		persons : [
-		{ name: 'Aish', age: 23},
-		{ name: 'Arun', age:26}
+		{ id: '1', name: 'Aish', age: 23},
+		{ id: '2', name: 'Arun', age:26}
 		],
 		otherState: 'some other value',
 		showPersons: false
@@ -22,17 +22,29 @@ class App extends Component {
 		} )
 	}
 
-	// changeNameHandler = (event) => {
-	// 	this.setState( {
-	// 		persons : [
-	// 	{ name: 'Aish', age: 23},
-	// 	{ name: event.target.value, age:26}
-	// 	]
-	// 	} )
-	// }
+	changeNameHandler = (event, id) => {
+		const personIndex = this.state.persons.findIndex(p => {
+			return p.id === id; 
+		});
+
+		const person = {
+			...this.state.persons[personIndex]
+		};
+
+		person.name = event.target.value;
+
+		const persons = [...this.state.persons];
+		persons[personIndex] = person
+
+		this.setState( {
+			persons: persons
+		} )
+	}
 
 	deletePersonHandler = (personIndex) => {
-		const persons = this.state.persons;
+		//this is a bad practice, since the persons is just a pointer to the persons state
+		//const persons = this.state.persons;
+		const persons = [...this.state.persons];
 		persons.splice(personIndex, 1)
 		this.setState({persons:persons})
 
@@ -61,7 +73,10 @@ class App extends Component {
 						return <Person 
 							name={person.name} 
 							age={person.age} 
-							click={() => this.deletePersonHandler(index)} />
+							click={() => this.deletePersonHandler(index)} 
+							key={person.id}
+							changed={(event) => this.changeNameHandler(event, person.id)} />
+					//click={this.deletePersonHandler.bind(this, index)}
 					})}
 	     	</div>	
 			);
