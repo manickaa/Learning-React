@@ -89,7 +89,6 @@ class App extends Component {
 	     	style={style} 
 	     	onClick={this.togglePersonsHandler}>Toggle Persons 
 	     </button>
-	     {persons}
 	    </div>
 	    //React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Did I get it right?'), React.createElement('h2', null, 'YES! I did!!'))
 	  );
