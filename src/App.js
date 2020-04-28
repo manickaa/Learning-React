@@ -35,7 +35,7 @@ class App extends Component {
 		const doesShow = this.state.showPersons;
 		this.setState( { 
 			showPersons: !doesShow
-		});
+		})
 	}
 	render() {
 		const style = {
@@ -46,24 +46,26 @@ class App extends Component {
 			cursor: 'pointer'
 		};
 
+		let persons = null;
+
+		if (this.state.showPersons) {
+			persons = (
+				<div>
+					{this.state.persons.map(person => {
+						return <Person name={person.name} age={person.age} />
+					})}
+	     	</div>	
+			);
+		}
+
 		return (
 	    <div className="App">
 	     <h1>Hi, I'm react App</h1>
 	     <button
 	     	style={style} 
-	     	onClick={this.togglePersonsHandler}>Toggle Persons </button>
-	     	{ this.state.showPersons === true ?
-	     	<div>
-	     		<Person 
-	     		name={this.state.persons[0].name} 
-	     		age={this.state.persons[0].age}
-	     		click={this.buttonHandler.bind(this, 'Manickaa')} />
-	     		<Person 
-	     		name={this.state.persons[1].name} 
-	     		age={this.state.persons[1].age}
-	     		changed={this.changeNameHandler} />
-	     	</div> : null
-	     }
+	     	onClick={this.togglePersonsHandler}>Toggle Persons 
+	     </button>
+	     {persons}
 	    </div>
 	    //React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Did I get it right?'), React.createElement('h2', null, 'YES! I did!!'))
 	  );
