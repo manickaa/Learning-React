@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 
 import Person from './Person/Person';
 
+
 class Persons extends Component {
 	// static getDerivedStateFromProps(props, state) {
 	// 	console.log('Persons.js getDerivedStateFromProps');
@@ -10,7 +11,13 @@ class Persons extends Component {
 	// }
 	shouldComponentUpdate(nextProps, nextstate) {
 		console.log('Persons.js shouldComponentUpdate');
-		return true;
+		//here persons is array, which are reference types. So the pointers are compared here
+		//refer https://academind.com/learn/javascript/reference-vs-primitive-values/
+		if(nextProps.persons !== this.props.persons) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 	getSnapshotBeforeUpdate(prevProps, prevState) {
 		console.log('Persons.js getSnapshotBeforeUpdate');
@@ -22,6 +29,9 @@ class Persons extends Component {
 		console.log(snapshot);
 	}
 
+	componentWillUnmount() {
+		console.log('Persons.js componentWillUnmount');
+	}
 	render() {
 		console.log('Persons.js rendering...');
 		return this.props.persons.map((person,index) => {
