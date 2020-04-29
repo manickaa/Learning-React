@@ -1,9 +1,15 @@
 import React, { Component } from 'react';
 import './App.css';
 import Persons from '../Components/Persons/Persons';
+import Cockpit from '../Components/Cockpit/Cockpit';
 //import ErrorBoundary from '../Components/ErrorBoundary/ErrorBoundary';
 
 class App extends Component {
+	constructor(props) {
+		super(props);
+		console.log('[App.js] constructor');
+	}
+
 	state = {
 		persons : [
 		{ id: '1', name: 'Aish', age: 23},
@@ -11,6 +17,24 @@ class App extends Component {
 		],
 		otherState: 'some other value',
 		showPersons: false
+	}
+
+	static getDerivedStateFromProps(props, state) {
+		console.log('[App.js] getDerivedStateFromProps', props);
+		return state;
+	}
+
+	componentDidMount() {
+		console.log('[App.js] componentDidMount');
+	}
+
+	shouldComponentUpdate(nextProps, nextState) {
+		console.log('App.js shouldComponentUpdate');
+		return true;
+	}
+
+	componentDidUpdate() {
+		console.log('App.js componentDidUpdate');
 	}
 
 	buttonHandler = (newName) => {
@@ -50,6 +74,7 @@ class App extends Component {
 		this.setState({persons:persons});
 
 	}
+
 	togglePersonsHandler = () => {
 		const doesShow = this.state.showPersons;
 		this.setState( { 
@@ -57,35 +82,24 @@ class App extends Component {
 		})
 	}
 	render() {
-		const style = {
-			backgroundColor: 'white',
-			font: 'inherit',
-			border: '1px solid blue',
-			padding: '8px',
-			cursor: 'pointer'
-		};
+		
+		console.log('[App.js] render');
 
 		let persons = null;
 
 		if (this.state.showPersons) {
-			persons = (
-				<div>
-					<Persons 
-						persons={this.state.persons}
-						clicked={this.deletePersonHandler}
-						changed={this.changeNameHandler} />
-	     	</div>	
-			);
+			persons = 
+				<Persons 
+					persons={this.state.persons}
+					clicked={this.deletePersonHandler}
+					changed={this.changeNameHandler} />	;
 		}
 
 		return (
 	    <div className="App">
-	     <h1>Hi, I'm react App</h1>
-	     <button
-	     	style={style} 
-	     	onClick={this.togglePersonsHandler}>Toggle Persons 
-	     </button>
-	     {persons}
+	    	<Cockpit title={this.props.appTitle}
+	    	clicked={this.togglePersonsHandler} /> 
+	     	{persons}
 	    </div>
 	    //React.createElement('div', {className: 'App'}, React.createElement('h1', null, 'Did I get it right?'), React.createElement('h2', null, 'YES! I did!!'))
 	  );
@@ -93,3 +107,4 @@ class App extends Component {
 }
 
 export default App;
+
